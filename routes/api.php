@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/players/{id}', [PlayerController::class, 'update']);
     Route::delete('/players/{id}', [PlayerController::class, 'destroy']);
     Route::get('/dashboard', [PlayerController::class, 'dashboard']);
+    Route::get('/players/{id}', [PlayerController::class, 'show']);
 
     // Subscriptions
     Route::post('/players/{id}/subscription/create', [SubscriptionController::class, 'createSub']);

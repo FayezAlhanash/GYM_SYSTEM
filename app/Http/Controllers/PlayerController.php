@@ -182,4 +182,32 @@ class PlayerController extends Controller
             'less_than_5_days' => $lessThanFive
         ]);
     }
+
+    public function show(Request $request, $id)
+    {
+        $player = Player::where('id', $id)
+            ->where('coach_id', $request->user()->id)
+            ->firstOrFail();
+
+        $lastSubscription = $player->subscriptions()
+            ->latest('end_date')
+            ->first();
+
+        $today = now();
+
+        $daysLeft = null;
+        $isActive = false;
+
+        if ($lastSubscription) {
+            $daysLeft = $today->diffInDays($lastSubscription->end_date, false);
+            $isActive = $lastSubscription->end_date >= $today;
+        }
+
+        return response()->json([
+            'player' => $player,
+            'subscription' => $lastSubscription,
+            'days_left' => $daysLeft,
+            'is_active' => $isActive
+        ]);
+    }
 }
