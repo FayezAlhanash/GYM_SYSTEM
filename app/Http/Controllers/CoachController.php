@@ -57,17 +57,17 @@ class CoachController extends Controller
         }
         if ($coach->status !== 'active') {
 
-        $message = match ($coach->status) {
-            'blocked' => 'Your account has been blocked',
-            'pending' => 'Your account is not approved yet',
-            default   => 'Account not allowed',
-        };
+            $message = match ($coach->status) {
+                'blocked' => 'Your account has been blocked',
+                'pending' => 'Your account is not approved yet',
+                default   => 'Account not allowed',
+            };
 
-        return response()->json([
-            'message' => $message
-        ], 403);
-    }
-    
+            return response()->json([
+                'message' => $message
+            ], 403);
+        }
+
         $token = $coach->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -78,11 +78,15 @@ class CoachController extends Controller
     }
 
     public function logout(Request $request)
-{
-    $request->user()->currentAccessToken()->delete();
+    {
+        $request->user()->currentAccessToken()->delete();
 
-    return response()->json([
-        'message' => 'Logged out successfully'
-    ]);
-}
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
+    }
+    public function profile(Request $request)
+    {
+        return response()->json($request->user());
+    }
 }

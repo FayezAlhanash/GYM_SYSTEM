@@ -54,7 +54,6 @@ class PlayerController extends Controller
 
         $players = $query->paginate(10);
 
-        // نحسب days_left لكل لاعب
         $players->getCollection()->each(function ($player) use ($today) {
 
             $lastSub = $player->subscriptions->first();

@@ -39,13 +39,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/players/{id}', [PlayerController::class, 'update']);
     Route::delete('/players/{id}', [PlayerController::class, 'destroy']);
     Route::get('/dashboard', [PlayerController::class, 'dashboard']);
+        Route::get('/players/expired', [PlayerController::class, 'expired']);
+
     Route::get('/players/{id}', [PlayerController::class, 'show']);
 
     // Subscriptions
     Route::post('/players/{id}/subscription/create', [SubscriptionController::class, 'createSub']);
     Route::post('/players/{id}/subscription/renew', [SubscriptionController::class, 'renew']);
     Route::get('/players/{id}/subscription/current', [SubscriptionController::class, 'current']);
-    Route::get('/players/expired', [PlayerController::class, 'expired']);
 
 });
 
