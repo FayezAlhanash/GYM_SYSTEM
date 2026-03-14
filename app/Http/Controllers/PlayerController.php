@@ -52,7 +52,7 @@ class PlayerController extends Controller
             });
         }
 
-        $players = $query->paginate(10);
+        $players = $query;
 
         $players->getCollection()->each(function ($player) use ($today) {
 
