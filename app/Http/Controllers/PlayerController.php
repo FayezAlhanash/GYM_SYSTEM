@@ -52,9 +52,9 @@ class PlayerController extends Controller
             });
         }
 
-        $players = $query;
+        $players = $query->get();
 
-        $players->getCollection()->each(function ($player) use ($today) {
+        $players->each(function ($player) use ($today) {
 
             $lastSub = $player->subscriptions->first();
 
