@@ -64,3 +64,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/coaches/{id}/reject', [AdminController::class, 'rejectCoach']);
 
 });
+Route::get('/test', function () {
+    return response()->json([
+        'message' => 'API is working 🚀'
+    ]);
+});
