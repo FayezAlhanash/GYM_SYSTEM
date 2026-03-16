@@ -66,7 +66,7 @@ class PlayerController extends Controller
                 $player->is_active = false;
             }
         });
-
+        $players = $players->sortBy('days_left')->values();
         return response()->json($players);
     }
 
