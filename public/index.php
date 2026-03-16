@@ -1,5 +1,7 @@
 <?php
-
+if (php_sapi_name() === 'cli-server') {
+    $_SERVER['SCRIPT_NAME'] = '/index.php';
+}
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
