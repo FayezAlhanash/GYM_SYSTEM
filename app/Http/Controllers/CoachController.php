@@ -46,6 +46,7 @@ class CoachController extends Controller
         $request->validate([
             'phone'    => 'required|string',
             'password' => 'required|string',
+            'fcm_token' => 'nullable|string'
         ]);
 
         $coach = Coach::where('phone', $request->phone)->first();
@@ -68,8 +69,12 @@ class CoachController extends Controller
             ], 403);
         }
 
-        $token = $coach->createToken('auth_token')->plainTextToken;
 
+        if ($request->filled('fcm_token')) {
+            $coach->fcm_token = $request->fcm_token;
+            $coach->save();
+        }
+        $token = $coach->createToken('auth_token')->plainTextToken;
         return response()->json([
             'message' => 'Login successful',
             'coach'   => $coach,
@@ -88,5 +93,17 @@ class CoachController extends Controller
     public function profile(Request $request)
     {
         return response()->json($request->user());
+    }
+    public function saveFcmToken(Request $request)
+    {
+        $request->validate([
+            'fcm_token' => 'required'
+        ]);
+
+        $coach = $request->user();
+        $coach->fcm_token = $request->fcm_token;
+        $coach->save();
+
+        return response()->json(['message' => 'Token saved']);
     }
 }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('location');
              $table->string('profile_image')->nullable();
+             $table->text('fcm_token')->nullable();
             $table->enum('status', ['pending', 'active', 'blocked'])->default('pending');
             $table->timestamps();
         });
