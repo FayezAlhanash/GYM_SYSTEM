@@ -67,3 +67,5 @@ Route::get('/test', function () {
         'message' => 'API is working 🚀'
     ]);
 });
+
+Route::middleware('auth:sanctum')->post('/test-notification', [CoachController::class, 'sendTestNotification']);

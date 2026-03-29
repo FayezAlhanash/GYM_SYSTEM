@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coach;
+use App\Services\FirebaseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -105,5 +106,29 @@ class CoachController extends Controller
         $coach->save();
 
         return response()->json(['message' => 'Token saved']);
+    }
+
+
+    public function sendTestNotification(Request $request)
+    {
+        $coach = $request->user();
+
+        if (!$coach->fcm_token) {
+            return response()->json([
+                'message' => 'No FCM token'
+            ], 400);
+        }
+
+        $firebase = new FirebaseService();
+
+        $firebase->send(
+            $coach->fcm_token,
+            'Test Notification',
+            'Hello from Laravel 🔥'
+        );
+
+        return response()->json([
+            'message' => 'Notification sent'
+        ]);
     }
 }
