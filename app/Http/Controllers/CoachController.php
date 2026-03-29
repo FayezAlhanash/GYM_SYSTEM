@@ -124,7 +124,7 @@ class CoachController extends Controller
         $firebase->send(
             $coach->fcm_token,
             'Test Notification',
-            'Hello from Laravel 🔥'
+            'khara baatlass '
         );
 
         return response()->json([
