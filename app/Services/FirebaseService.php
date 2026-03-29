@@ -9,7 +9,8 @@ use Kreait\Firebase\Messaging\Notification as FirebaseNotification;
 class FirebaseService
 {
     public function send($token, $title, $body)
-    {
+{
+    try {
         $factory = (new Factory)
             ->withServiceAccount(storage_path('app/firebase/gymfy-11b38-firebase-adminsdk-fbsvc-202a685d45.json'));
 
@@ -20,5 +21,9 @@ class FirebaseService
             ->toToken($token);
 
         $messaging->send($message);
+
+    } catch (\Exception $e) {
+        dd($e->getMessage());
     }
+}
 }
