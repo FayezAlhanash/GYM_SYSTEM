@@ -68,4 +68,16 @@ Route::get('/test', function () {
     ]);
 });
 
-Route::middleware('auth:sanctum')->post('/test-notification', [CoachController::class, 'sendTestNotification']);
+use App\Services\FirebaseService;
+
+Route::post('/test-notification', function () {
+    $firebase = new FirebaseService();
+
+    $firebase->send(
+        'TEST_TOKEN_HERE',
+        'Test',
+        'Hello'
+    );
+
+    return response()->json(['status' => 'done']);
+});

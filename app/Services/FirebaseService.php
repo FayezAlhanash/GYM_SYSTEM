@@ -8,7 +8,7 @@ use Kreait\Firebase\Messaging\Notification as FirebaseNotification;
 
 class FirebaseService
 {
-    public function send($token, $title, $body)
+   public function send($token, $title, $body)
 {
     try {
         $factory = (new Factory)
@@ -22,8 +22,12 @@ class FirebaseService
 
         $messaging->send($message);
 
-    } catch (\Exception $e) {
-        dd($e->getMessage());
+    } catch (\Throwable $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'line' => $e->getLine(),
+            'file' => $e->getFile(),
+        ], 500);
     }
 }
 }
