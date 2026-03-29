@@ -111,9 +111,9 @@ class CoachController extends Controller
 
     public function sendTestNotification(Request $request)
     {
-        $coach = $request->user();
+        $coach = Coach::first(); // 👈 مؤقت
 
-        if (!$coach->fcm_token) {
+        if (!$coach || !$coach->fcm_token) {
             return response()->json([
                 'message' => 'No FCM token'
             ], 400);
@@ -124,7 +124,7 @@ class CoachController extends Controller
         $firebase->send(
             $coach->fcm_token,
             'Test Notification',
-            'khara baatlass '
+            '🔥 works'
         );
 
         return response()->json([
